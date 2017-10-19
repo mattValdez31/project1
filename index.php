@@ -56,4 +56,29 @@
 		public function __construct()
 		{
 			$this->html .= '<html>';
-			$this->
+			$this->html .= '<link rel="stylesheet" href="styles.css">';
+			$this->html .= '<body>';
+		}
+		public function __destruct()
+		{
+			$this->html .= '</body></html>';
+			stringFunctions::printThis($this->html);
+		}
+
+		public function get()
+		{
+			echo 'default get message';
+		}
+		public function post()
+		{
+			print_r($_POST);
+		}
+	}
+
+	class homepage extends page 
+	{
+		public function get()
+		{
+			$form = '<form action="index2.php" method="post">';
+			$form .= 'First name:<br>';
+			$form .= '<input type="text" name="firstname" value="Mickey">';
