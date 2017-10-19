@@ -82,3 +82,13 @@
 			$form = '<form action="index2.php" method="post">';
 			$form .= 'First name:<br>';
 			$form .= '<input type="text" name="firstname" value="Mickey">';
+			$form .= '<br>';
+			$form .= 'Last name:<br>';
+			$form .= '<input type="text" name="lastname" value="Mouse">';
+			$form .= '<input type="submit" value="Submit">';
+			$form .= '</form> ';
+			$this->html .= 'homepage';
+			$this->html .= $form;
+		}
+	}
+
