@@ -1,9 +1,12 @@
 <?php
 	$destDir = "uploads/";
-	$baseName = basename($FILES["uploadFile"]["name"]);
-	$targetFile = $destDir . $baseName;
+	$baseName = basename($_FILES["uploadFile"]["name"]);
+	$targetFile = $destDir .  $baseName;
+	//$targetFile = $destDir . basename($_FILES["uploadFile"]["name"]);
 	$fileType = pathinfo($targetFile, PATHINFO_EXTENSION);
 	$ok = 1;
+	echo $targetFile . "<br>";
+	echo $baseName . "<br>";
 
 	//Check if file already exists
 	if(file_exists($targetFile))
@@ -18,9 +21,10 @@
 	}
 	else
 	{
-		if (move_uploaded_file($FILES["uploadFile"]["tmpName"], $target_file))
+		if (move_uploaded_file($_FILES["uploadFile"]["name"], $target_file))
 		{
 			echo $baseName . "has been uploaded.";
+			//echo "File has been uploaded";
 		}
 		else
 		{
