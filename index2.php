@@ -31,5 +31,5 @@
 		}
 	}
 
-	//header("Location: https://web.njit.edu/~mjv32/IS601p1/week5.php");
+	header("Location: https://web.njit.edu/~mjv32/is601001f17/project1/index.php?page=htmlTable");
 ?>
