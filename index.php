@@ -96,7 +96,7 @@
 	{
 		public function get()
 		{
-			$form = '<form action="index2.php?page=uploadform" method="post"> enctype="multipart/form-data">';
+			$form = '<form action="index2.php?page=uploadform" method="post" enctype="multipart/form-data">';
 			$form .= '<input type="file" name="fileToUpload" id="fileToUpload">';
 			$form .= '<input type="submit" value="Upload Image" name="submit">';
 			$form .= '</form>';
@@ -111,6 +111,41 @@
 		}
 	}
 
-	class htmlTable extends page {}
+	class htmlTable extends page
+	{
+		<table> //function?
+			<?php
+				$csvFile = fopen("csv sample 1.csv", "r");
+
+				$lines = fgetcsv($csvFile);
+				$len = count($lines);
+				for ($x = 0; $x < $len; $x++)
+				{
+					echo '<th> ' . $lines[$x] . ' </th>';
+				}
+
+				while(!feof($csvFile))
+				{
+					$lines = fgetcsv($csvFile);
+					$len = count($lines);
+
+					for ($x = 0; $x < $len; $x++)
+					{
+						switch($x)
+						{
+							case 0:
+								echo '<tr> <td> ' . $lines[$x] . '</td>';
+								break;
+							case ($len-1):
+								echo '<td> ' . $lines[$x] . '</td> </tr>';
+								break;
+							default:
+								echo '<td> ' . $lines[$x] . '</td>';
+						}
+					}
+				}
+			?>
+		</table>
+	}
 
 ?>
