@@ -147,99 +147,64 @@
 	{
 		public function get()
 		{
-			
-			$csv = $_GET['filename'];
+			$fn = $_GET['filename'];
 			chdir('uploads');
-			$file = fopen($csv, "r");
-			htmlTags::tableFormat();
-			$row = 1;
-			while (($data=fgetcsv($file)) !== FALSE)
+			$csvFile = fopen($fn, "r");
+			tableTags::tFormat();
+			$lines = fgetcsv($csvFile);
+			$len = count($lines);
+			for ($x = 0; $x < $len; $x++)
 			{
-				foreach($data as $value)
+				tableTags::tHeader($lines[$x]);
+			}
+
+			while(!feof($csvFile))
+			{
+				$lines = fgetcsv($csvFile);
+				$len = count($lines);
+				for ($x = 0; $x < $len; $x++)
 				{
-					if($row == 1)
+					if ($x == $len-1)
 					{
-						htmlTags::tableHeader($value);
+						tableTags::tDetail($lines[$x]);
+						tableTags::endTRow();
 					}
 					else
 					{
-						htmlTags::tableContent($value);
+						tableTags::tDetail($lines[$x]);
 					}
 				}
-				$row++;
-				htmlTags::breakTableRow();
 			}
-		fclose($file);
+			fclose($csvFile);
 		}
 	}
 			
-	class htmlTags
+	class tableTags
 	{
 		static public function headingOne($text)
 		{
 			return '<h1>' . $text . '</h1>';
 		}
 
-		static public function tableFormat()
+		static public function tFormat()
 		{
 			echo "<table>";
 		}
 
-		static public function tableHeader($text)
-		{
-			echo '<th>' . $text . '</th>';
-		}
-
-		static public function tableContent($text)
+		static public function tDetail($text)
 		{
 			echo '<td>' . $text . '</td>';
 		}
 
-		static public function breakTableRow()
+		static public function tHeader($text)
+		{
+			echo '<th>' . $text . '</th>';
+		}
+
+		static public function endTRow()
 		{
 			echo '</tr>';
 		}
 	}
 			
-					
-			/*$out = '<table>';
-			$out .= '<?php';
-			//$out .= '$csvFile = fopen($_FILES["fileToUpload"]["name"], "r");';
-			$out .= '$csvFile = fopen("csv sample 1.csv", "r");';
-				$out .= '$lines = fgetcsv($csvFile);';
-				$out .= '$len = count($lines);';
-				$out .= 'for ($x = 0; $x < $len; $x++)';
-				$out .= '{';
-					//$out .= 'echo $len;';
-					//$out .= "echo '<th> ' . $lines[$x] . ' </th>';";
-					$out .= "echo '<th>  {$lines[$x]}  </th>';";
-				$out .= '}';
-
-				$out .= 'while(!feof($csvFile))';
-				$out .= '{';
-					$out .= '$lines = fgetcsv($csvFile);';
-					$out .= '$len = count($lines);';
-
-					$out .= 'for ($x = 0; $x < $len; $x++)';
-					$out .= '{';
-						$out .= 'switch($x)';
-						$out .= '{';
-							$out .= 'case 0:';
-								$out .= 'echo '<tr> <td> ' . $lines[$x] . '</td>';';
-								$out .= 'break;';
-							$out .= 'case ($len-1):';
-								$out .= 'echo '<td> ' . $lines[$x] . '</td> </tr>';';
-								$out .= 'break;';
-							$out .= 'default:';
-								$out .= 'echo '<td> ' . $lines[$x] . '</td>';';
-						$out .= '}';
-					$out .= '}';
-				$out .= '}';
-			$out .= '?>';
-			$out .= '</table>';
-
-			$this->html .= $out; 
-		}
-	}*/
-
 ?>
